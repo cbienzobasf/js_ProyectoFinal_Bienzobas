@@ -1,0 +1,22 @@
+[
+    { "id": 1, "nombre": "Banquetería Básica", "categoria": "Banquetería", "precio": 500000 },
+    { "id": 2, "nombre": "Música en Vivo", "categoria": "Entretenimiento", "precio": 1200000 },
+    { "id": 3, "nombre": "Decoración Floral", "categoria": "Decoración", "precio": 1500000 },
+    { "id": 4, "nombre": "Fotografía Profesional", "categoria": "Fotografía", "precio": 2000000 },
+    { "id": 5, "nombre": "Alquiler de Carpas", "categoria": "Infraestructura", "precio": 3000000 },
+    { "id": 6, "nombre": "Banda en Vivo", "categoria": "Entretenimiento", "precio": 2500000 },
+    { "id": 7, "nombre": "Torta de Matrimonio", "categoria": "Banquetería", "precio": 800000 },
+    { "id": 8, "nombre": "Show de Luces", "categoria": "Entretenimiento", "precio": 1800000 },
+    { "id": 9, "nombre": "Cabina Fotográfica", "categoria": "Fotografía", "precio": 1500000 },
+    { "id": 10, "nombre": "Decoración Temática", "categoria": "Decoración", "precio": 2000000 },
+    { "id": 11, "nombre": "DJ Profesional", "categoria": "Entretenimiento", "precio": 1200000 },
+    { "id": 12, "nombre": "Estación de Café", "categoria": "Banquetería", "precio": 600000 },
+    { "id": 13, "nombre": "Barra Libre", "categoria": "Banquetería", "precio": 3000000 },
+    { "id": 14, "nombre": "Recuerdos Personalizados", "categoria": "Decoración", "precio": 1000000 },
+    { "id": 15, "nombre": "Maestro de Ceremonias", "categoria": "Fotografía", "precio": 900000 },
+    { "id": 16, "nombre": "Logística y Transporte", "categoria": "Infraestructura", "precio": 2500000 },
+    { "id": 17, "nombre": "Fuegos Artificiales", "categoria": "Entretenimiento", "precio": 3500000 },
+    { "id": 18, "nombre": "Jardinería Floral", "categoria": "Decoración", "precio": 1800000 },
+    { "id": 19, "nombre": "Catering Gourmet", "categoria": "Banquetería", "precio": 4000000 },
+    { "id": 20, "nombre": "Servicios de Valet Parking", "categoria": "Infraestructura", "precio": 1000000 }
+]
