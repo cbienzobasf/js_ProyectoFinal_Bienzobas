@@ -7,6 +7,7 @@
 - **HTML5**: Estructura principal de la página web.
 - **JavaScript (ES6)**: Lógica del simulador.
 - **SweetAlert2**: Librería para notificaciones interactivas.
+- **localStorage** y **sessionStorage**: Mantención de datos de carro de compras y filtros.
 
 ## Descripción del Proyecto
 
@@ -17,10 +18,11 @@ Este simulador desarrollado en JavaScript y HTML permite gestionar servicios rel
 - **Gestión de carro de compra** agregar o remover servicios.
 - **Aplicación de cupones** de descuento.
 - **Cálculo** total carro de compra (con cupón aplicado).
+- **Gestión de almacenamiento de datos** en carro de compras y filtros mediante uso de Local Storage y Session Storage.
 
 Esta entrega corresponde a la cuarta simulación de una solución para la gestión de servicios de matrimonios, cubriendo los requisitos presentados para la entrega del proyecto final del curso de Javascript Comisión 63320, CoderHouse.
 
-Nota: Para mayor información y evolución del presente proyecto, por favor referise a entregas anteriores disponibles en los siguientes links:
+Nota: Para mayor información y evolución del presente proyecto, por favor referirse a entregas anteriores disponibles en los siguientes links:
 
 https://github.com/cbienzobasf/js_preEntrega1_Bienzobas
 https://github.com/cbienzobasf/js_preEntrega2_Bienzobas
@@ -36,7 +38,10 @@ https://github.com/cbienzobasf/js_preEntrega3_Bienzobas
    - Renderizado de los datos en UI.
 3. **Librería SweetAlert2**:
    - Notificaciones usuarias en principales acciones en Carro, cupones, errores o confirmaciones.
-4. **Uso lógica JavaScript**:
+4. **Uso de Storage**:
+   - Persistencia del carro de compras mediante `localStorage`.
+   - Persistencia de filtros aplicados mediante `sessionStorage`.
+5. **Uso lógica JavaScript**:
    - Uso de **funciones arrow**, **desestructuración** y **métodos de array** como `filter` y `reduce`.
    - Uso de **operadores lógicos** y **condicionales**.
 
@@ -60,6 +65,7 @@ https://github.com/cbienzobasf/js_preEntrega3_Bienzobas
 **3. Carro de Compras**
 - **Agregar y Eliminar**: Los usuarios pueden agregar o eliminar servicios seleccionados.
 - **Cálculo del Total**: Se calcula el total en función de los servicios agregados.
+- **Persistencia**: El estado del carro se guarda en `localStorage` y perduran registrados dentro del navegador.
 
 **4. Aplicación de Cupones de Descuento**
 - Códigos de descuento (por ejemplo: `matrimonio10` para un 10% de descuento) aplicado sobre el Costo Total del Carro de Compras.
@@ -68,6 +74,9 @@ https://github.com/cbienzobasf/js_preEntrega3_Bienzobas
 **5. Botón Finalizar Compra**
 - Mensaje de confirmación.
 - Carro de compras vaciado automáticamente al hacer utilizar Botón.
+
+**6. Persistencia de Filtros**
+- Los filtros aplicados se guardan en `sessionStorage` y se restauran automáticamente al recargar la página.
 
 ## Ejemplo de Datos (servicios.json)
 ```json

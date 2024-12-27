@@ -42,9 +42,9 @@ function renderizarServicios(lista = servicios) {
     });
 }
 
-// Renderiza carro de compras
+// Renderizar carro de compras
 function renderizarCarro() {
-    listaCarro.innerHTML = ""; // Limpiar carro de compras
+    listaCarro.innerHTML = "";
     carro.forEach((servicio, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
@@ -54,7 +54,7 @@ function renderizarCarro() {
         listaCarro.appendChild(li);
     });
 
-    // Agrega eventos para eliminar servicios del carro
+    // Agregar eventos para eliminar servicios
     document.querySelectorAll(".btn-eliminar").forEach(btn => {
         btn.addEventListener("click", (e) => {
             const index = e.target.dataset.index;
@@ -62,13 +62,16 @@ function renderizarCarro() {
         });
     });
 
-    // Actualización total del carro con descuento aplicado
+    // Actualizar el total del carrito
     const totalSinDescuento = carro.reduce((sum, servicio) => sum + servicio.precio, 0);
     const totalConDescuento = totalSinDescuento - (totalSinDescuento * (descuento / 100));
     totalCarro.textContent = totalConDescuento.toFixed(2);
+
+    // Guardar el estado del carrito
+    guardarCarroEnStorage();
 }
 
-// Agrega servicios al carro de compras
+// Agregar servicios al carro de compras
 function agregarAlCarro(index) {
     const servicio = servicios[index];
     carro.push(servicio);
@@ -84,13 +87,13 @@ function agregarAlCarro(index) {
     });
 }
 
-// Elimina un servicio del carro
+// Eliminar un servicio del carro
 function eliminarDelCarro(index) {
     const servicio = carro[index];
     carro.splice(index, 1);
     renderizarCarro();
 
-    //Notificación eliminación de servicio
+    // Notificación eliminación de servicio
     Swal.fire({
         title: 'Servicio Eliminado',
         text: `${servicio.nombre} ha sido eliminado del carro de compras.`,
@@ -100,7 +103,7 @@ function eliminarDelCarro(index) {
     });
 }
 
-// Aplicación de filtros Nombre, precio min y/o precio max
+// Aplicación de filtros
 function aplicarFiltros() {
     const nombre = filtroNombre.value.toLowerCase();
     const precioMin = parseInt(filtroPrecioMin.value) || 0;
@@ -108,6 +111,8 @@ function aplicarFiltros() {
     const categoriasSeleccionadas = Array.from(filtrosCategoria)
         .filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value);
+
+    guardarFiltrosEnStorage(nombre, precioMin, precioMax, categoriasSeleccionadas);
 
     const serviciosFiltrados = servicios.filter(servicio =>
         servicio.nombre.toLowerCase().includes(nombre) &&
@@ -119,13 +124,12 @@ function aplicarFiltros() {
     renderizarServicios(serviciosFiltrados);
 }
 
-// Aplicación cupón de descuento
+// Aplicación de cupones
 function aplicarCupon() {
     const cupon = inputCupon.value.trim().toUpperCase();
     if (cupon === "MATRIMONIO10") {
         descuento = 10;
 
-        // Notificación cupón aplicado
         Swal.fire({
             title: '¡Cupón Aplicado!',
             text: 'Se ha aplicado un 10% de descuento a tu compra.',
@@ -136,7 +140,6 @@ function aplicarCupon() {
     } else {
         descuento = 0;
 
-        // Notificación error cupón inválido
         Swal.fire({
             title: 'Cupón Inválido',
             text: 'El código ingresado no es válido.',
@@ -148,37 +151,69 @@ function aplicarCupon() {
     renderizarCarro();
 }
 
-// Confirmación compra
-function finalizarCompra() {
-    if (carro.length === 0) {
-        // Notificación Carro de compra vacío
-        Swal.fire({
-            title: 'Carro Vacío',
-            text: 'Agrega servicio para finalizar la compra.',
-            icon: 'warning',
-            timer: 1500,
-            showConfirmButton: false
-        });
-    } else {
-        // Notificación Compra finalizada
-        Swal.fire({
-            title: '¡Compra Confirmada!',
-            text: 'Gracias por preferirnos',
-            icon: 'success'
-        });
-
-        // Vacia carro de compra
-        carro = [];
-        descuento = 0;
-        renderizarCarro();
+// Guardar carrito en localStorage
+function guardarCarroEnStorage() {
+    try {
+        localStorage.setItem("carro", JSON.stringify(carro));
+    } catch (error) {
+        console.warn("No se pudo guardar el carrito en localStorage", error);
     }
 }
 
-// Botón finalizar compra
-const btnFinalizarCompra = document.createElement("button");
-btnFinalizarCompra.textContent = "Finalizar Compra";
-btnFinalizarCompra.addEventListener("click", finalizarCompra);
-document.getElementById("carro-compra").appendChild(btnFinalizarCompra);
+// Cargar carrito desde localStorage
+function cargarCarroDesdeStorage() {
+    try {
+        const carroGuardado = localStorage.getItem("carro");
+        if (carroGuardado) {
+            carro = JSON.parse(carroGuardado);
+            renderizarCarro();
+        }
+    } catch (error) {
+        console.warn("No se pudo cargar el carrito desde localStorage", error);
+    }
+}
+
+// Guardar filtros en sessionStorage
+function guardarFiltrosEnStorage(nombre, precioMin, precioMax, categoriasSeleccionadas) {
+    try {
+        const filtros = { nombre, precioMin, precioMax, categoriasSeleccionadas };
+        sessionStorage.setItem("filtros", JSON.stringify(filtros));
+    } catch (error) {
+        console.warn("No se pudo guardar los filtros en sessionStorage", error);
+    }
+}
+
+// Cargar filtros desde sessionStorage
+function cargarFiltrosDesdeStorage() {
+    try {
+        const filtrosGuardados = sessionStorage.getItem("filtros");
+        if (filtrosGuardados) {
+            const { nombre, precioMin, precioMax, categoriasSeleccionadas } = JSON.parse(filtrosGuardados);
+
+            filtroNombre.value = nombre || "";
+            filtroPrecioMin.value = precioMin || "";
+            filtroPrecioMax.value = precioMax || "";
+
+            filtrosCategoria.forEach(checkbox => {
+                checkbox.checked = categoriasSeleccionadas.includes(checkbox.value);
+            });
+
+            aplicarFiltros();
+        }
+    } catch (error) {
+        console.warn("No se pudo cargar los filtros desde sessionStorage", error);
+    }
+}
+
+// Inicialización
+document.addEventListener("DOMContentLoaded", () => {
+    cargarCarroDesdeStorage();
+    cargarFiltrosDesdeStorage();
+});
+
+// Eventos
+btnFiltrar.addEventListener("click", aplicarFiltros);
+btnAplicarCupon.addEventListener("click", aplicarCupon);
 
 // Carga de servicios desde JSON
 fetch("servicios.json")
@@ -189,13 +224,9 @@ fetch("servicios.json")
         return response.json();
     })
     .then(data => {
-        servicios = data; // Guardar servicios
-        renderizarServicios(); // Renderiza servicios
+        servicios = data;
+        renderizarServicios();
     })
     .catch(error => {
         console.error("Error al cargar los datos:", error);
     });
-
-// Inicialización filtros y eventos
-btnFiltrar.addEventListener("click", aplicarFiltros);
-btnAplicarCupon.addEventListener("click", aplicarCupon);
